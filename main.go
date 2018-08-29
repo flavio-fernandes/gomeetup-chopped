@@ -1,10 +1,10 @@
 package main
 
 import (
+	//	"crypto/rsa"
 	"io/ioutil"
 	"log"
 	"net/http"
-	//	"crypto/rsa"
 )
 
 func main() {
@@ -17,8 +17,10 @@ func handle(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatalf("Failed to read body: %s", err)
 	}
+	command := r.Header.Get("Command")
+	log.Printf("Key is %s\n", body)
 	response := []byte(`You said to "`)
-	response = append(response, body...)
+	response = append(response, []byte(command)...)
 	response = append(response, '"', '\n')
 	w.Write(response)
 }
